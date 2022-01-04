@@ -6,16 +6,26 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(corrplot)
+library(leaps)
+library(car)
+library(caret)
+library(MASS) 
+library(performance)
 ```
 
 ```{r}
-data_df=read.csv("data/cdi.csv") %>% 
-  mutate(CRM_1000=crimes/pop*1000) %>%  
-  select(-crimes,-pop) %>% 
-  select(-id,-cty,-state) %>% 
+data_df=read.csv("./data/cdi.csv") %>% 
+  mutate(CRM_1000=crimes/pop*1000) %>%  ## add new variable CRM_1000(the crime rate per 1,000 population)
+  dplyr::select(-crimes) %>% 
+  dplyr::select(-id,-cty,-state) %>% 
   mutate(region=as.factor(region))
+```
 
+```{r}
 # stepwise model selection
  
  mult.fit = lm(CRM_1000 ~ ., data = data_df)

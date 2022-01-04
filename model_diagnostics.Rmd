@@ -1,6 +1,6 @@
 ---
 title: "Model Diagnostics"
-author: "Yiru Gong, Jiaqi Chen"
+author: "Jiaqi Chen, Yiru Gong"
 date: "12/10/2021"
 output: html_document
 ---
@@ -63,7 +63,7 @@ vif(vif4) ## remove totalinc and bagrad has the highest VIF
 vif5=lm(crm_1000 ~ area + pop18 + pop65 + beds + hsgrad + poverty + unemp + pcincome  + region, data = data_fit)
 vif(vif5) ## remove bagrad and bagrad has the highest VIF. Remaining variables' VIFs are between 0 to 5. We remove three variables(docs,totalinc and bagrad) which have VIF higher than 5
 
-stargazer(vif2,vif3,vif4,vif5, type = "text",column.labels=c("Model 1 (with all independent variables included)","Model 2 (without docs)","Model 3(without docs and totalinc)","Model 4(without docs,totalinc and bagrad)")) ## plot a table
+# stargazer(vif2,vif3,vif4,vif5, type = "text",column.labels=c("Model 1 (with all independent variables included)","Model 2 (without docs)","Model 3(without docs and totalinc)","Model 4(without docs,totalinc and bagrad)")) ## plot a table
 ```
 Plus, looking at the adjusted R2, which compares four models, we see that the differences are very small, so we did not lose much predictive power in dropping three variables. Rather we have minimized the issue of highly correlated independent variables and thus an inability to tease out the real relationships with our dependent variable of interest.
 

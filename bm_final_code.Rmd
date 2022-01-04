@@ -1,8 +1,7 @@
 ---
-title: "BM_final_code"
-author: "all"
-date: "12/14/2021"
-output: html_document
+title: "Project Final Code"
+author: "Jiaqi Chen, Yiru Gong, Keming Zhan, Yu Si, Jie Liu"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -15,8 +14,8 @@ library(car)
 library(caret)
 library(MASS) 
 library(performance)
-library(psych)
 ```
+
 ## Four assumptions associated with a linear regression:
 
 1.Linearity: The relationship between X and the mean of Y is linear.
@@ -41,6 +40,29 @@ data_df=read.csv("./data/cdi.csv") %>%
 
 ## TWO tables of 14  variables
 
+test
+
+test
+
+test
+
+test
+
+test
+
+test
+
+test
+
+test
+
+test
+
+test
+
+test
+
+
 ```{r}
 numeric_variable_tb=tibble(Variable=c("area","pop","pop18","pop65","docs","beds","hsgrad","bagrad","poverty","unemp","pcincome","totalinc","CRM_1000"),
                    mean=c(1041,393011,28.6,12.2,988,1459,77.6,21.1,8.72,6.60,18561,7869,57.3),
@@ -57,9 +79,6 @@ numeric_variable_tb
 factor_variable_tb
 ## describe(data_df)
 ```
-
-
-
 
 
 ## Checking outliers using boxplots
@@ -102,7 +121,7 @@ boxplot(data_df$CRM_1000,main='The crime rate per 1,000 population')
 
 ## histogram(distribution of 12 independent numeric variables)
 
-```{r}
+```{r fig.width=8,fig.height=6}
 data_without_region_df=
   data_df %>% dplyr::select(-region,-CRM_1000) ## since histogram cannot be plotted using a factor variable, we delete the variable region. 
 
@@ -114,9 +133,11 @@ for (n in 1:ncol(data_without_region_df)){
 }
 
 ```
+
 from 12 histograms of each numeric variable, we notice the distribution of 5 histograms are right-skewed, therefore, we need to perform log transformation for these five variables(area,pop,docs,beds and totalinc)
 
 ## log transformation for five variables whose distribution is right-skewed 
+
 ```{r}
 data_df = data_df %>% 
   mutate(log_area = log(area),
@@ -129,7 +150,8 @@ data_df = data_df %>%
 ```
 
 ## Re-check distribution of independent variables
-```{r}
+
+```{r fig.width = 8, fig.height=6}
 data_without_region_log_CRM1000_df=
   data_df %>% dplyr::select(-region,-CRM_1000)
 
@@ -167,9 +189,6 @@ cor_df=
   dplyr::select(-region) %>% 
   cor() ## Correlation coefficient
 
-require(corrgram)
-corrgram(data_df, order=TRUE)
-
 corrplot(cor(cor_df), type = "upper", diag = FALSE)
 ```
 
@@ -179,12 +198,14 @@ In addition,we also notice independent variables like log_totalinc,log_beds,log_
 # Multicollinearity Assessment
 
 Check collinearity. Stepwise variable selection
+
 ResultL:remove four variables:pop,docs,bed and bagrad
 
 A general rule of thumb for variance inflation factor(VIF):
 A value of 1 indicates there is no correlation between a given predictor variable and any other predictor variables in the model.
 A value between 1 and 5 indicates moderate correlation between a given predictor variable and other predictor variables in the model, but this is often not severe enough to require attention.
 A value greater than 5 indicates potentially severe correlation between a given predictor variable and other predictor variables in the model. In this case, the coefficient estimates and p-values in the regression output are likely unreliable.
+
 ```{r}
 vif1 = lm(CRM_1000 ~ ., data = data_df)
 summary(vif1)
@@ -209,7 +230,8 @@ vif(vif5) ## remove log_beds  and remaining variables' VIFs are between 0 to 5 w
 
 ```
 
-## Altogether, We remove four variables(log_totalinc,log_docs,bagrad and log_beds ) whose VIFs are higher than 5
+Altogether, We remove four variables(log_totalinc,log_docs,bagrad and log_beds ) whose VIFs are higher than 5
+
 ```{r}
 data_df=data_df %>% 
         dplyr::select(-log_totalinc,-log_beds,-log_docs,-bagrad) 
@@ -217,7 +239,8 @@ data_df=data_df %>%
 
 The remaining 9 variables are pop18, pop65, hsgrad, poverty, unemp, pcincome, region, log_area, log_pop
 
-## After log transformation and VIF test, we draw a new correlation plotfrom which we find all absoulte correlation coefficients are less than 0.7,indicating the absence of multicollinearity.
+After log transformation and VIF test, we draw a new correlation plotfrom which we find all absoulte correlation coefficients are less than 0.7,indicating the absence of multicollinearity.
+
 ```{r}
 cor_df=
   data_df %>%
@@ -229,8 +252,6 @@ corrplot(cor(cor_df), type = "upper", diag = FALSE)
 ```
 
 
-Above is revised  by Jie Liu. data_df has been dealt with well, use it directly.
-
 # stepwise model selection
 
 ```{r}
@@ -240,6 +261,9 @@ mult.fit = lm(CRM_1000 ~ ., data = data_df)
 step(mult.fit, direction = 'forward')
 step(mult.fit, direction = 'backward')
 model = step(mult.fit, direction = 'both')
+
+broom::tidy(model) %>% 
+  knitr::kable(digits = c(2,2,2,2,4))
 ```
 
 # Interaction
@@ -521,7 +545,7 @@ terms = c("Residual","Percent of population - aged 18-34","Percent of population
 
 broom::tidy(final) %>% 
   mutate(term = terms) %>% 
-  knitr::kable(caption = "Final Model Estimates",digits = c(2,2,2,2,NA))
-  
+  arrange(p.value) %>% 
+  knitr::kable(caption = "Final Model Estimates",digits = c(2,2,2,2,4))
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: "Model Building and Variable Selection & cross validation"
-author: Keming zhan
+author: "Keming zhan"
 date: 10/12/2021
 output: html_document
 ---
