@@ -1,0 +1,619 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={bm visualization},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{bm visualization}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_df}\OtherTok{=}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/cdi.csv"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{CRM\_1000=}\NormalTok{crimes}\SpecialCharTok{/}\NormalTok{pop}\SpecialCharTok{*}\DecValTok{1000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}  \DocumentationTok{\#\# add new variable CRM\_1000(the crime rate per 1,000 population) }
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{crimes,}\SpecialCharTok{{-}}\NormalTok{pop) }\SpecialCharTok{\%\textgreater{}\%} \DocumentationTok{\#\# Since new variable CRM\_1000=crimes/pop*1000, we do not consider these two variables(crimes and pop) any more}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{region=}\FunctionTok{as.factor}\NormalTok{(region))}
+
+\NormalTok{data\_df }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ skimr}\SpecialCharTok{::}\FunctionTok{skim\_without\_charts}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule
+& \\
+\midrule
+\endfirsthead
+\toprule
+& \\
+\midrule
+\endhead
+Name & Piped data \\
+Number of rows & 440 \\
+Number of columns & 15 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+character & 2 \\
+factor & 1 \\
+numeric & 12 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: character}
+
+\begin{longtable}[]{@{}lrrrrrrr@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & min & max & empty &
+n\_unique & whitespace \\
+\midrule
+\endhead
+cty & 0 & 1 & 3 & 8 & 0 & 371 & 0 \\
+state & 0 & 1 & 2 & 2 & 0 & 48 & 0 \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: factor}
+
+\begin{longtable}[]{@{}lrrlrl@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & ordered & n\_unique &
+top\_counts \\
+\midrule
+\endhead
+region & 0 & 1 & FALSE & 4 & 3: 152, 2: 108, 1: 103, 4: 77 \\
+\bottomrule
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}lrrrrrrrrr@{}}
+\toprule
+skim\_variable & n\_missing & complete\_rate & mean & sd & p0 & p25 &
+p50 & p75 & p100 \\
+\midrule
+\endhead
+area & 0 & 1 & 1041.41 & 1549.92 & 15.0 & 451.25 & 656.50 & 946.75 &
+20062.00 \\
+pop18 & 0 & 1 & 28.57 & 4.19 & 16.4 & 26.20 & 28.10 & 30.02 & 49.70 \\
+pop65 & 0 & 1 & 12.17 & 3.99 & 3.0 & 9.88 & 11.75 & 13.62 & 33.80 \\
+docs & 0 & 1 & 988.00 & 1789.75 & 39.0 & 182.75 & 401.00 & 1036.00 &
+23677.00 \\
+beds & 0 & 1 & 1458.63 & 2289.13 & 92.0 & 390.75 & 755.00 & 1575.75 &
+27700.00 \\
+hsgrad & 0 & 1 & 77.56 & 7.02 & 46.6 & 73.88 & 77.70 & 82.40 & 92.90 \\
+bagrad & 0 & 1 & 21.08 & 7.65 & 8.1 & 15.28 & 19.70 & 25.33 & 52.30 \\
+poverty & 0 & 1 & 8.72 & 4.66 & 1.4 & 5.30 & 7.90 & 10.90 & 36.30 \\
+unemp & 0 & 1 & 6.60 & 2.34 & 2.2 & 5.10 & 6.20 & 7.50 & 21.30 \\
+pcincome & 0 & 1 & 18561.48 & 4059.19 & 8899.0 & 16118.25 & 17759.00 &
+20270.00 & 37541.00 \\
+totalinc & 0 & 1 & 7869.27 & 12884.32 & 1141.0 & 2311.00 & 3857.00 &
+8654.25 & 184230.00 \\
+CRM\_1000 & 0 & 1 & 57.29 & 27.33 & 4.6 & 38.10 & 52.43 & 72.60 &
+295.99 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{each-continuous-virable-distribution}{%
+\subsection{each continuous virable
+distribution}\label{each-continuous-virable-distribution}}
+
+boxplot for each continuous variable
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{area,}\AttributeTok{main=}\StringTok{\textquotesingle{}Land area measured in square miles\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{pop18,}\AttributeTok{main=}\StringTok{\textquotesingle{}Percent of population aged 18{-}34\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{pop65,}\AttributeTok{main=}\StringTok{\textquotesingle{}Percent of population aged 65+\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{docs,}\AttributeTok{main=}\StringTok{\textquotesingle{}Number of active physicians\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{beds,}\AttributeTok{main=}\StringTok{\textquotesingle{}Number of hospital beds\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{hsgrad,}\AttributeTok{main=}\StringTok{\textquotesingle{}Percent high school graduates\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{bagrad,}\AttributeTok{main=}\StringTok{\textquotesingle{}Percent bachelor’s degrees\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{unemp,}\AttributeTok{main=}\StringTok{\textquotesingle{}Percent below poverty level\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{pcincome,}\AttributeTok{main=}\StringTok{\textquotesingle{}Per capita income\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{totalinc,}\AttributeTok{main=}\StringTok{\textquotesingle{}Total personal income\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-10.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{CRM\_1000,}\AttributeTok{main=}\StringTok{\textquotesingle{}the crime rate per 1,000 population\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-2-11.pdf}
+
+\hypertarget{relationship-of-two-variablespairs}{%
+\subsection{relationship of two
+variables(pairs)}\label{relationship-of-two-variablespairs}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pair\_df}\OtherTok{=}
+\NormalTok{  data\_df }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{cty,}\SpecialCharTok{{-}}\NormalTok{state) }
+    
+\FunctionTok{pairs}\NormalTok{(pair\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-3-1.pdf}
+\#\# Correlation plot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_df}\OtherTok{=}
+\NormalTok{  data\_df }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{cty,}\SpecialCharTok{{-}}\NormalTok{state,}\SpecialCharTok{{-}}\NormalTok{region) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{cor}\NormalTok{() }\DocumentationTok{\#\# Correlation coefficient}
+
+
+\FunctionTok{corrplot}\NormalTok{(}\FunctionTok{cor}\NormalTok{(cor\_df), }\AttributeTok{type =} \StringTok{"upper"}\NormalTok{, }\AttributeTok{diag =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+相关系数:\textbar r\textbar\textless0.4为低度线性相关；0.4≤\textbar r\textbar\textless0.7为显著性相关；0.7≤\textbar r\textbar\textless1为高度线性相关
+
+显著相关: pop18 vs bagrad 0.45609703\\
+pop18 vs pop65 -0.616309639\\
+hsgrad vs poverty -0.691750483 hsgrad vs unemp -0.593595788 hsgrad vs
+pcincome 0.52299613 bagrad vs unemp -0.540906913\\
+bagrad vs pcincome 0.69536186 poverty vs bagrad -0.40842385 unemp vs
+poverty 0.436947236 pcincome vs poverty -0.60172504 CRM\_100 VS poverty
+0.471844218
+
+高度线性相关: bed vs docs 0.950464395 hsgrad vs bagrad 0.70778672
+totalinc vs docs 0.948110571\\
+totalinc vs beds 0.902061545
+
+\hypertarget{since-correlation-coefficient-of-bed-and-docs-is-the-highest-draw-a-scatterpoint-plot-of-these-two-variables}{%
+\subsection{Since correlation coefficient of bed and docs is the
+highest, draw a scatterpoint plot of these two
+variables}\label{since-correlation-coefficient-of-bed-and-docs-is-the-highest-draw-a-scatterpoint-plot-of-these-two-variables}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(beds,docs)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(totalinc,docs)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\hypertarget{check-if-some-variables-approximate-to-normal-distribution}{%
+\subsection{check if some variables approximate to normal
+distribution}\label{check-if-some-variables-approximate-to-normal-distribution}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{CRM\_1000) }\CommentTok{\#非常接近线性}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{area)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{pop18) }\CommentTok{\#接近线性}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{pop65)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{docs)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{beds)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{hsgrad) }\CommentTok{\#接近线性}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{bagrad) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{poverty) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{unemp) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-10.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{pcincome)  }\CommentTok{\#接近线性}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-11.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{totalinc)}
+\FunctionTok{qqnorm}\NormalTok{(data\_df}\SpecialCharTok{$}\NormalTok{totalinc)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-6-12.pdf}
+\#\# fit regression using all predictors(except ID,cty,state)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_df}\OtherTok{=}\NormalTok{data\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{cty,}\SpecialCharTok{{-}}\NormalTok{state)}
+\NormalTok{mult.fit }\OtherTok{=} \FunctionTok{lm}\NormalTok{(CRM\_1000 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ data\_df)}
+\FunctionTok{summary}\NormalTok{(mult.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = CRM_1000 ~ ., data = data_df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -45.880 -10.126  -1.627   9.724 193.039 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -8.043e+01  2.973e+01  -2.705 0.007103 ** 
+## area        -5.519e-04  7.300e-04  -0.756 0.450046    
+## pop18        1.368e+00  3.527e-01   3.879 0.000121 ***
+## pop65        1.884e-01  3.171e-01   0.594 0.552716    
+## docs        -7.066e-03  2.498e-03  -2.829 0.004896 ** 
+## beds         1.174e-02  1.567e-03   7.490 4.03e-13 ***
+## hsgrad       2.076e-01  2.930e-01   0.708 0.479090    
+## bagrad      -3.362e-01  3.191e-01  -1.054 0.292702    
+## poverty      2.372e+00  4.009e-01   5.915 6.83e-09 ***
+## unemp        2.234e-01  5.650e-01   0.395 0.692742    
+## pcincome     2.487e-03  5.021e-04   4.954 1.05e-06 ***
+## totalinc    -6.745e-04  2.629e-04  -2.566 0.010632 *  
+## region2      8.505e+00  2.957e+00   2.877 0.004221 ** 
+## region3      2.493e+01  2.895e+00   8.610  < 2e-16 ***
+## region4      2.305e+01  3.663e+00   6.294 7.72e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 19.43 on 425 degrees of freedom
+## Multiple R-squared:  0.5107, Adjusted R-squared:  0.4946 
+## F-statistic: 31.68 on 14 and 425 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{(mult.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 15 x 5
+##    term          estimate std.error statistic  p.value
+##    <chr>            <dbl>     <dbl>     <dbl>    <dbl>
+##  1 (Intercept) -80.4      29.7         -2.71  7.10e- 3
+##  2 area         -0.000552  0.000730    -0.756 4.50e- 1
+##  3 pop18         1.37      0.353        3.88  1.21e- 4
+##  4 pop65         0.188     0.317        0.594 5.53e- 1
+##  5 docs         -0.00707   0.00250     -2.83  4.90e- 3
+##  6 beds          0.0117    0.00157      7.49  4.03e-13
+##  7 hsgrad        0.208     0.293        0.708 4.79e- 1
+##  8 bagrad       -0.336     0.319       -1.05  2.93e- 1
+##  9 poverty       2.37      0.401        5.92  6.83e- 9
+## 10 unemp         0.223     0.565        0.395 6.93e- 1
+## 11 pcincome      0.00249   0.000502     4.95  1.05e- 6
+## 12 totalinc     -0.000675  0.000263    -2.57  1.06e- 2
+## 13 region2       8.51      2.96         2.88  4.22e- 3
+## 14 region3      24.9       2.89         8.61  1.44e-16
+## 15 region4      23.1       3.66         6.29  7.72e-10
+\end{verbatim}
+
+\hypertarget{ux5047ux8bbeux68c0ux9a8c-ux6b63ux6001ux6027-qqplot}{%
+\subsection{假设检验 正态性
+qqplot}\label{ux5047ux8bbeux68c0ux9a8c-ux6b63ux6001ux6027-qqplot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqPlot}\NormalTok{(mult.fit,}\AttributeTok{id.method=}\StringTok{\textquotesingle{}identify\textquotesingle{}}\NormalTok{,}\AttributeTok{simulate =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{main=}\StringTok{\textquotesingle{}Q{-}Q plot\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{verbatim}
+## [1]   6 282
+\end{verbatim}
+
+可以看到所有的点都在直线附近，并都落在置信区间内，这表明正态性假设符合得很完美
+
+\hypertarget{ux5047ux8bbeux68c0ux9a8c-ux72ecux7acbux6027}{%
+\subsection{假设检验
+独立性}\label{ux5047ux8bbeux68c0ux9a8c-ux72ecux7acbux6027}}
+
+进行D-W检验：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{durbinWatsonTest}\NormalTok{(mult.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  lag Autocorrelation D-W Statistic p-value
+##    1      0.06792391      1.857479   0.108
+##  Alternative hypothesis: rho != 0
+\end{verbatim}
+
+P = 0.124 \textgreater{}
+0.05不显著，说明因变量之间无自相关性，互相独立。
+
+\hypertarget{ux5047ux8bbeux68c0ux9a8c-ux7ebfux6027ux5173ux7cfb-ux6210ux5206ux6b8bux5deeux56fe}{%
+\subsection{假设检验 线性关系
+成分残差图}\label{ux5047ux8bbeux68c0ux9a8c-ux7ebfux6027ux5173ux7cfb-ux6210ux5206ux6b8bux5deeux56fe}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{crPlots}\NormalTok{(mult.fit) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-10-1.pdf}
+\includegraphics{visualization_files/figure-latex/unnamed-chunk-10-2.pdf}
+成分残差图证实了线性假设，说明线性模型对该数据集是比较合适的。
+
+\hypertarget{ux540cux65b9ux5deeux6027}{%
+\subsection{同方差性}\label{ux540cux65b9ux5deeux6027}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mult.fit }\OtherTok{=} \FunctionTok{lm}\NormalTok{(CRM\_1000 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ data\_df)}
+
+\FunctionTok{ncvTest}\NormalTok{(mult.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Non-constant Variance Score Test 
+## Variance formula: ~ fitted.values 
+## Chisquare = 173.5754, Df = 1, p = < 2.22e-16
+\end{verbatim}
+
+p = 2.037e-09
+显著，说明误差方差不恒定。选用almost所有predictor的线性回归不满足同方差性
+异方差性的出现意味着误差项的方差不恒定，这常常出现在有异常值（Outlier）的数据集上，如果使用标准的回归模型，这些异常值的重要性往往被高估。在这种情况下，标准差和置信区间不一定会变大还是变小。
+
+\end{document}
